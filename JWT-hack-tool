@@ -7,6 +7,7 @@
 # IMproper validation of signature for various reasons. Just chang ethe data and resubmit with same sig.
 #Changing the Encryption from Asynch to Sych 
 # Use of Sych can result in Brute forcing of Weak Key
+#KID is also vulnerable to SQL injections :header={"typ":"JWT","alg":"HS256","kid":" zzz\' UNION SELECT \'1"} this sets key to 1
 
 
 
