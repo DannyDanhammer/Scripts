@@ -1,5 +1,5 @@
 SHELLSHOCK!
-
+By :DannyDanhammer
 
 This vulnerability plays off the vulnerability that was in BASH that allwoed for RCE to be acheived through the unintentional execution of bash commands after the legitimate function call from an ENV that was created as part of a CGI call. 
 
