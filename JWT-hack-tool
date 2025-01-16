@@ -1,7 +1,7 @@
 #Using the following Python3 code, we can more easily abuse the HMAC  JWT tokens. Normal online tool sunfortunetly struggle with proper signatures and inclussion sof kid values in the header. 
 #This tool breaks it down to a json.dump in bytes before URLsafe Base64 encoding. Use of other tools such as Burpsuite decoder is quicke rto simply decode, alter, etc, the header, but encoding for a proper signature is important and covered here.
 
-# Other issues to look for:
+# Other issues to look for: 
 # Improper use of kernel.open instead of file.open resulting in injection in a kid header.
 # File traveral through the kid header variable pointing to a known location to allow for secret key
 # IMproper validation of signature for various reasons. Just chang ethe data and resubmit with same sig.
